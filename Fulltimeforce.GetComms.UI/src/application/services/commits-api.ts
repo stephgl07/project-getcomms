@@ -4,6 +4,7 @@ import { GetCommitsRsDTO } from "@/common/domain/get-commits.interface";
 
 export const fetchCommitsDashboard = async (page?: number, per_page?: number): Promise<ApiResponse<GetCommitsRsDTO[]>> => {
   const baseUrl = `${process.env.NEXT_PUBLIC_BASE_API_URL}/repository-search/commits`;
+  console.log("CommitsApi: " + baseUrl)
   const response = await Get<ApiResponse<GetCommitsRsDTO[]>>(`${baseUrl}`, {
     params: { page, per_page }
   });
@@ -12,6 +13,7 @@ export const fetchCommitsDashboard = async (page?: number, per_page?: number): P
 
 export const fetchCommitsPerBranch = async (sha: string, page?: number, per_page?: number): Promise<ApiResponse<GetCommitsRsDTO[]>> => {
   const baseUrl = `${process.env.NEXT_PUBLIC_BASE_API_URL}/repository-search/commits-per-branch`;
+  console.log("CommitsPerBranchApi: " + baseUrl)
   const response = await Get<ApiResponse<GetCommitsRsDTO[]>>(`${baseUrl}`, {
     params: { sha, page, per_page }
   });
