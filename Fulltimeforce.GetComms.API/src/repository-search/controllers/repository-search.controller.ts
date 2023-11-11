@@ -11,8 +11,10 @@ import { GetCommitRsDTO } from 'src/commons/domain/dtos/reponses/get-commit.inte
 import { GetWorkflowsRunsRsDTO } from 'src/commons/domain/dtos/reponses/get-workflowsruns.interface';
 import { GetWorkflowsRunsUseCase } from '../application/use-cases/get-workflowsruns/get-workflowsruns-use-case.service';
 import { IGetWorkflowsRunsUseCase } from '../application/use-cases/get-workflowsruns/get-workflowsruns-use-case.interface';
+import { ApiQuery, ApiTags } from '@nestjs/swagger';
 import { ConfigService } from '@nestjs/config';
 
+@ApiTags('Repository Search')
 @Controller('repository-search')
 export class RepositorySearchController {
   constructor(
@@ -28,6 +30,8 @@ export class RepositorySearchController {
     ) {}
 
   @Get('commits')
+  @ApiQuery({ name: 'page', required: false, description: 'The page number.', type: 'number' })
+  @ApiQuery({ name: 'per_page', required: false, description: 'Items per page.', type: 'number' })
   async getCommits(
     @Res() res,
     //@Query('repoName') repoName: string,
@@ -41,6 +45,8 @@ export class RepositorySearchController {
   }
 
   @Get('branches')
+  @ApiQuery({ name: 'page', required: false, description: 'The page number.', type: 'number' })
+  @ApiQuery({ name: 'per_page', required: false, description: 'Items per page.', type: 'number' })
   async getBranches(
     @Res() res,
     //@Query('repoName') repoName: string,
@@ -57,9 +63,11 @@ export class RepositorySearchController {
   }
 
   @Get('commits-per-branch')
+  @ApiQuery({ name: 'sha', required: true, description: 'The commit hash or SHA.' })
+  @ApiQuery({ name: 'page', required: false, description: 'The page number.', type: 'number' })
+  @ApiQuery({ name: 'per_page', required: false, description: 'Items per page.', type: 'number' })
   async getCommitsPerBranch(
     @Res() res,
-    //@Query('repoName') repoName: string,
     @Query('sha') sha: string,
     @Query('page') page?: number,
     @Query('per_page') per_page?: number,
@@ -76,6 +84,7 @@ export class RepositorySearchController {
   }
 
   @Get('commit')
+  @ApiQuery({ name: 'sha', required: true, description: 'The commit hash or SHA.' })
   async getCommit(
     //@Query('repoName') repoName: string,
     @Query('sha') sha: string,
@@ -90,6 +99,8 @@ export class RepositorySearchController {
   }
 
   @Get('workflows-runs')
+  @ApiQuery({ name: 'page', required: false, description: 'The page number.', type: 'number' })
+  @ApiQuery({ name: 'per_page', required: false, description: 'Items per page.', type: 'number' })
   async getWorkflowsRuns(
     @Res() res,
     //@Query('repoName') repoName: string,
