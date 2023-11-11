@@ -11,7 +11,7 @@ WORKDIR /usr/src/app
 COPY Fulltimeforce.GetComms.API/package*.json ./
 
 # Install production dependencies.
-RUN npm install --only=production
+RUN npm install
 
 # Copy local code to the container image.
 COPY Fulltimeforce.GetComms.API/ .
