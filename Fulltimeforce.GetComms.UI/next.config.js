@@ -10,7 +10,7 @@ dotenv.config({ path: envFilePath });
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  basePath: (process.env.NODE_ENV !== "development" ? process.env.BASE_PATH : ""),
+  //basePath: (process.env.NODE_ENV !== "development" ? process.env.BASE_PATH : ""),
   sassOptions: {
     includePaths: [path.join(__dirname, "styles")],
   },
@@ -20,7 +20,7 @@ const nextConfig = {
       transform: '@mui/icons-material/{{member}}',
     },
   },
-  output: "export",
+  //output: "export",
   reactStrictMode: false,
 };
 
