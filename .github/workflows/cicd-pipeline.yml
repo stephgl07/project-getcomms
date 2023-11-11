@@ -28,7 +28,7 @@ jobs:
         context: .
         file: ./Fulltimeforce.GetComms.API/Dockerfile
         push: true
-        tags: ${{ secrets.DOCKERHUB_USERNAME }}/project-getcomms-api:latest
+        tags: ${{ secrets.DOCKERHUB_USERNAME }}/project-getcomms-api:${{ github.sha }}
 
     - name: Build and push UI
       uses: docker/build-push-action@v5
@@ -36,7 +36,7 @@ jobs:
         context: .
         file: ./Fulltimeforce.GetComms.UI/Dockerfile
         push: true
-        tags: ${{ secrets.DOCKERHUB_USERNAME }}/project-getcomms-ui:latest
+        tags: ${{ secrets.DOCKERHUB_USERNAME }}/project-getcomms-ui:${{ github.sha }}
 
     # Desplegar en Azure App Service el API
     - name: Deploy API to Azure
@@ -45,7 +45,7 @@ jobs:
         app-name: 'project-getcomms-api'
         slot-name: 'production'
         publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE_API }}
-        images: 'stephgl/project-getcomms-api:latest'
+        images: 'stephgl/project-getcomms-api:${{ github.sha }}'
         
     # Desplegar en Azure App Service la UI
     - name: Deploy UI to Azure
@@ -54,4 +54,4 @@ jobs:
         app-name: 'project-getcomms-ui'
         slot-name: 'production'
         publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE_UI }}
-        images: 'stephgl/project-getcomms-ui:latest'
+        images: 'stephgl/project-getcomms-ui:${{ github.sha }}'
