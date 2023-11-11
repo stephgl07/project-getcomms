@@ -3,7 +3,7 @@ name: Deploy to Azure App Service using Docker Hub
 on:
   push:
     branches:
-      - feature/api/dockerizing
+      - main
 
 jobs:
   build-and-deploy:
@@ -11,14 +11,14 @@ jobs:
     steps:
     - uses: actions/checkout@v2
 
-    # Iniciar sesión en Docker Hub
+    # Log in on Docker Hub
     - name: Docker Hub Login
       uses: docker/login-action@v3
       with:
         username: ${{ secrets.DOCKERHUB_USERNAME }}
         password: ${{ secrets.DOCKERHUB_TOKEN }}
 
-    # Construir y hacer push de la imagen del API de NestJS a Docker Hub
+    # Build and push images to Docker Hub
     - name: Set up Docker Buildx
       uses: docker/setup-buildx-action@v3
 
@@ -38,7 +38,7 @@ jobs:
         push: true
         tags: ${{ secrets.DOCKERHUB_USERNAME }}/project-getcomms-ui:${{ github.sha }}
 
-    # Desplegar en Azure App Service el API
+    # Deploy API image to Azure App Service
     - name: Deploy API to Azure
       uses: azure/webapps-deploy@v2
       with:
@@ -47,7 +47,7 @@ jobs:
         publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE_API }}
         images: 'stephgl/project-getcomms-api:${{ github.sha }}'
         
-    # Desplegar en Azure App Service la UI
+    # Deploy UI image to Azure App Service
     - name: Deploy UI to Azure
       uses: azure/webapps-deploy@v2
       with:
