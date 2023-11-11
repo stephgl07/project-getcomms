@@ -20,6 +20,13 @@ async function bootstrap() {
   app.enableCors();
   app.useGlobalFilters(new GitHubExceptionFilter(), new BaseExceptionFilter());
   app.useGlobalInterceptors(new LoggerInterceptor());
+  const config = new DocumentBuilder()
+    .setTitle('API GET COMMS')
+    .setDescription('API component for technical test for Fulltimeforce company.')
+    .setVersion('1.0')
+    .build();
+  const document = SwaggerModule.createDocument(app, config);
+  SwaggerModule.setup('api', app, document);
   await app.listen(process.env.PORT);
 }
 bootstrap();
