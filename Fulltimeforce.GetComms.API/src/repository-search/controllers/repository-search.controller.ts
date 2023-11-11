@@ -17,6 +17,9 @@ import { ConfigService } from '@nestjs/config';
 @ApiTags('Repository Search')
 @Controller('repository-search')
 export class RepositorySearchController {
+
+  private readonly repoName: string;
+  
   constructor(
     @Inject(GetCommitsUseCase)
     private readonly getCommitsUseCase: IGetCommitsUseCase,
@@ -27,7 +30,9 @@ export class RepositorySearchController {
     @Inject(GetWorkflowsRunsUseCase)
     private readonly getWorkflowsRunsUseCase: IGetWorkflowsRunsUseCase,
     private configService: ConfigService
-    ) {}
+  ) {
+    this.repoName = this.configService.get<string>('API_DEFAULT_REPO');
+  }
 
   @Get('commits')
   @ApiQuery({ name: 'page', required: false, description: 'The page number.', type: 'number' })
@@ -37,9 +42,8 @@ export class RepositorySearchController {
     @Query('page') page?: number,
     @Query('per_page') per_page?: number,
   ): Promise<void> {
-    const repoName = "demo-getcomms"
     const response: GetCommitsRsDTO[] =
-      await this.getCommitsUseCase.executeGetMany(repoName, page, per_page);
+      await this.getCommitsUseCase.executeGetMany(this.repoName, page, per_page);
     res.reply(200, response);
   }
 
@@ -51,9 +55,8 @@ export class RepositorySearchController {
     @Query('page') page?: number,
     @Query('per_page') per_page?: number,
   ): Promise<void> {
-    const repoName = this.configService.get<string>('API_DEFAULT_REPO');
     const response: GetBranchesRsDTO[] = await this.getBranchesUseCase.execute(
-      repoName,
+      this.repoName,
       page,
       per_page,
     );
@@ -70,10 +73,9 @@ export class RepositorySearchController {
     @Query('page') page?: number,
     @Query('per_page') per_page?: number,
   ): Promise<void> {
-    const repoName = this.configService.get<string>('API_DEFAULT_REPO');
     const response: GetCommitsRsDTO[] =
       await this.getCommitsPerBranchUseCase.execute(
-        repoName,
+        this.repoName,
         sha,
         page,
         per_page,
@@ -87,9 +89,8 @@ export class RepositorySearchController {
     @Query('sha') sha: string,
     @Res() res,
   ): Promise<void> {
-    const repoName = this.configService.get<string>('API_DEFAULT_REPO');
     const response: GetCommitRsDTO = await this.getCommitsUseCase.executeGet(
-      repoName,
+      this.repoName,
       sha,
     );
     res.reply(200, response);
@@ -103,9 +104,8 @@ export class RepositorySearchController {
     @Query('page') page?: number,
     @Query('per_page') per_page?: number,
   ): Promise<void> {
-    const repoName = this.configService.get<string>('API_DEFAULT_REPO');
     const response: GetWorkflowsRunsRsDTO[] =
-      await this.getWorkflowsRunsUseCase.execute(repoName, page, per_page);
+      await this.getWorkflowsRunsUseCase.execute(this.repoName, page, per_page);
     res.reply(200, response);
   }
 }
