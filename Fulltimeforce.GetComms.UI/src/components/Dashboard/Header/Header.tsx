@@ -156,7 +156,7 @@ const Header = () => {
                 textDecoration: "none",
               }}
             >
-              Stefano Garcia Luza
+              Stefano Garcia
             </Typography>
           </Box>
 
