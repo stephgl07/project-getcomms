@@ -45,7 +45,7 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 
 Pipeline is configured on the root path of the repository. It is executed when making a push to the "main" branch.
 
-You can see the deployment result here! => [https://stephgl07.github.io/demo-getcomms](https://stephgl07.github.io/demo-getcomms)
+You can test the deployment result here! => [https://project-getcomms-ui.azurewebsites.net](https://project-getcomms-ui.azurewebsites.net)
 
 ## 🛠️ Built With
 
@@ -55,6 +55,8 @@ You can see the deployment result here! => [https://stephgl07.github.io/demo-get
 - Material UI
 - Sass Modules
 - Github Actions
+- Docker
+- Azure App Service
 
 ## 🖋️ Authors
 

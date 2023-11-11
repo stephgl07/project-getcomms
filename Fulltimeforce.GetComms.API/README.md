@@ -47,7 +47,7 @@ Open [http://localhost:4000/api](http://localhost:4000/api) to test directly usi
 
 Pipeline is configured on the root path of the repository. It is executed when making a push to the "main" branch.
 
-You can test the deployment result here! => [https://api-getcomms.azurewebsites.net/api](https://api-getcomms.azurewebsites.net/api)
+You can test the deployment result here! => [https://project-getcomms-api.azurewebsites.net/api](https://project-getcomms-api.azurewebsites.net/api)
 
 ## 🛠️ Built With
 
@@ -56,7 +56,8 @@ You can test the deployment result here! => [https://api-getcomms.azurewebsites.
 - Swagger
 - Github API
 - Github Actions
-- Azure
+- Azure App Service
+- Docker
 
 ## 🖋️ Authors
 
