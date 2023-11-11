@@ -13,22 +13,30 @@ jobs:
 
     # Iniciar sesión en Docker Hub
     - name: Docker Hub Login
-      uses: docker/login-action@v1
+      uses: docker/login-action@v3
       with:
         username: ${{ secrets.DOCKERHUB_USERNAME }}
         password: ${{ secrets.DOCKERHUB_TOKEN }}
 
     # Construir y hacer push de la imagen del API de NestJS a Docker Hub
-    - name: Build and push NestJS API image to Docker Hub
-      run: |
-        docker build -t stephgl/project-getcomms-api:latest ./Fulltimeforce.GetComms.API
-        docker push stephgl/project-getcomms-api:latest
+    - name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v3
 
-    # Construir y hacer push de la imagen de la UI de Next.js a Docker Hub
-    - name: Build and push Next.js UI image to Docker Hub
-      run: |
-        docker build -t stephgl/project-getcomms-ui:latest ./Fulltimeforce.GetComms.UI
-        docker push stephgl/project-getcomms-ui:latest
+    - name: Build and push API
+      uses: docker/build-push-action@v5
+      with:
+        context: .
+        file: ./Fulltimeforce.GetComms.API/Dockerfile
+        push: true
+        tags: ${{ secrets.DOCKERHUB_USERNAME }}/project-getcomms-api:latest
+
+    - name: Build and push UI
+      uses: docker/build-push-action@v5
+      with:
+        context: .
+        file: ./Fulltimeforce.GetComms.UI/Dockerfile
+        push: true
+        tags: ${{ secrets.DOCKERHUB_USERNAME }}/project-getcomms-ui:latest
 
     # Desplegar en Azure App Service el API
     - name: Deploy API to Azure
