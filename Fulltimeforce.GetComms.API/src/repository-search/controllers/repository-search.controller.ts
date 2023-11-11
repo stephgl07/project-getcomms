@@ -34,11 +34,10 @@ export class RepositorySearchController {
   @ApiQuery({ name: 'per_page', required: false, description: 'Items per page.', type: 'number' })
   async getCommits(
     @Res() res,
-    //@Query('repoName') repoName: string,
     @Query('page') page?: number,
     @Query('per_page') per_page?: number,
   ): Promise<void> {
-    const repoName = this.configService.get<string>('API_DEFAULT_REPO');
+    const repoName = "demo-getcomms"
     const response: GetCommitsRsDTO[] =
       await this.getCommitsUseCase.executeGetMany(repoName, page, per_page);
     res.reply(200, response);
@@ -49,7 +48,6 @@ export class RepositorySearchController {
   @ApiQuery({ name: 'per_page', required: false, description: 'Items per page.', type: 'number' })
   async getBranches(
     @Res() res,
-    //@Query('repoName') repoName: string,
     @Query('page') page?: number,
     @Query('per_page') per_page?: number,
   ): Promise<void> {
@@ -86,7 +84,6 @@ export class RepositorySearchController {
   @Get('commit')
   @ApiQuery({ name: 'sha', required: true, description: 'The commit hash or SHA.' })
   async getCommit(
-    //@Query('repoName') repoName: string,
     @Query('sha') sha: string,
     @Res() res,
   ): Promise<void> {
@@ -103,7 +100,6 @@ export class RepositorySearchController {
   @ApiQuery({ name: 'per_page', required: false, description: 'Items per page.', type: 'number' })
   async getWorkflowsRuns(
     @Res() res,
-    //@Query('repoName') repoName: string,
     @Query('page') page?: number,
     @Query('per_page') per_page?: number,
   ): Promise<void> {
