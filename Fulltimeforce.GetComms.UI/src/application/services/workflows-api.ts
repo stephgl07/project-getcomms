@@ -4,7 +4,6 @@ import { GetWorkflowsRunsRsDTO } from "@/common/domain/get-workflowsruns.interfa
 
 export const fetchWorkflowsDashboard = async (page?: number, per_page?: number): Promise<ApiResponse<GetWorkflowsRunsRsDTO[]>> => {
   const baseUrl = `${process.env.NEXT_PUBLIC_BASE_API_URL}/repository-search/workflows-runs`;
-  console.log("WorkflowsApi: " + baseUrl)
   const response = await Get<ApiResponse<GetWorkflowsRunsRsDTO[]>>(`${baseUrl}`, {
     params: { page, per_page }
   });
